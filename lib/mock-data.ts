@@ -181,4 +181,33 @@ export const mockPosts: Post[] = [
     isLiked: false,
     isScrapped: false
   }
-]; 
+];
+
+export const styleOptions = {
+  styles: [
+    { id: 'realistic', name: '사실주의', description: '사실적인 이미지 스타일' },
+    { id: 'cartoon', name: '만화풍', description: '만화 스타일의 이미지' },
+    { id: 'watercolor', name: '수채화', description: '수채화 느낌의 이미지' },
+    { id: 'oil', name: '유화', description: '유화 스타일의 이미지' },
+  ],
+  textures: [
+    { id: 'smooth', name: '부드러운', description: '부드러운 텍스처' },
+    { id: 'rough', name: '거친', description: '거친 텍스처' },
+    { id: 'grainy', name: '그레인', description: '그레인 텍스처' },
+  ],
+  moods: [
+    { id: 'bright', name: '밝은', description: '밝은 분위기' },
+    { id: 'dark', name: '어두운', description: '어두운 분위기' },
+    { id: 'warm', name: '따뜻한', description: '따뜻한 분위기' },
+    { id: 'cold', name: '차가운', description: '차가운 분위기' },
+  ],
+};
+
+export const mockGeneratedImage = {
+  imageUrl: 'https://picsum.photos/800/800',
+  generationId: 'mock-gen-123',
+  status: 'success' as const,
+};
+
+export type StyleOption = typeof styleOptions;
+export type GeneratedImage = typeof mockGeneratedImage; 
