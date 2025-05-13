@@ -57,4 +57,34 @@ export interface GenerateImageResponse {
   success: boolean;
   imageURL?: string;
   error?: string;
+}
+
+// 이미지 생성 버튼 Props 타입
+export interface GenerateButtonProps {
+  prompt: string;
+  isGenerating: boolean;
+  onClick: () => void;
+}
+
+// 이미지 프리뷰 Props 타입
+export interface GeneratedImagePreviewProps {
+  generatedImage: {
+    imageUrl: string;
+    generationId: string;
+    status: 'success';
+  };
+}
+
+// 프롬프트 입력 Props 타입
+export interface PromptInputProps {
+  prompt: string;
+  onPromptChange: (value: string) => void;
+}
+
+// 스타일 옵션 Props 타입
+export interface StyleOptionsProps {
+  selectedStyle: string;
+  selectedColor: string;
+  onStyleChange: (value: string) => void;
+  onColorChange: (value: string) => void;
 } 

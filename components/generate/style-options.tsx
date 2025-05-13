@@ -1,13 +1,7 @@
 'use client';
 
 import { styleOptions } from '@/lib/mock-data';
-
-interface StyleOptionsProps {
-  selectedStyle: string;
-  selectedColor: string;
-  onStyleChange: (value: string) => void;
-  onColorChange: (value: string) => void;
-}
+import { StyleOptionsProps } from '@/types';
 
 export function StyleOptions({
   selectedStyle,

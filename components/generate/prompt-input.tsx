@@ -1,9 +1,6 @@
 'use client';
 
-interface PromptInputProps {
-  prompt: string;
-  onPromptChange: (value: string) => void;
-}
+import { PromptInputProps } from '@/types';
 
 export function PromptInput({ prompt, onPromptChange }: PromptInputProps) {
   return (

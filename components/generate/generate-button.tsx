@@ -1,10 +1,6 @@
 'use client';
 
-interface GenerateButtonProps {
-  prompt: string;
-  isGenerating: boolean;
-  onClick: () => void;
-}
+import { GenerateButtonProps } from '@/types';
 
 export function GenerateButton({ prompt, isGenerating, onClick }: GenerateButtonProps) {
   return (
