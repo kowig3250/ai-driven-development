@@ -210,4 +210,88 @@ export const mockGeneratedImage = {
 };
 
 export type StyleOption = typeof styleOptions;
-export type GeneratedImage = typeof mockGeneratedImage; 
+export type GeneratedImage = typeof mockGeneratedImage;
+
+export const mockGalleryImages = [
+  {
+    id: '1',
+    imageUrl: 'https://picsum.photos/400/400?random=1',
+    prompt: 'A serene landscape with mountains and a lake',
+    createdAt: '2024-03-15T10:00:00Z',
+    style: 'realistic',
+    isPublic: true,
+    tags: ['풍경', '자연', '산']
+  },
+  {
+    id: '2',
+    imageUrl: 'https://picsum.photos/400/400?random=2',
+    prompt: 'A futuristic cityscape at night',
+    createdAt: '2024-03-14T15:30:00Z',
+    style: 'cyberpunk',
+    isPublic: false,
+    tags: ['도시', '야경', '미래']
+  },
+  {
+    id: '3',
+    imageUrl: 'https://picsum.photos/400/400?random=3',
+    prompt: 'A cute cartoon character',
+    createdAt: '2024-03-13T09:15:00Z',
+    style: 'cartoon',
+    isPublic: true,
+    tags: ['캐릭터', '귀여움']
+  },
+  {
+    id: '4',
+    imageUrl: 'https://picsum.photos/400/400?random=4',
+    prompt: 'A realistic portrait of a person',
+    createdAt: '2024-03-12T14:45:00Z',
+    style: 'realistic',
+    isPublic: true,
+    tags: ['인물', '초상화']
+  }
+];
+
+export const mockCommunityPosts = [
+  {
+    postId: '1',
+    userId: 'user1',
+    userName: 'Alice',
+    userProfile: 'https://picsum.photos/50/50?random=1',
+    imageUrl: 'https://picsum.photos/400/400?random=4',
+    prompt: 'Magical forest with glowing mushrooms and fairies',
+    createdAt: '2024-03-15T11:20:00Z',
+    likes: 156,
+    comments: 23,
+    scraps: 45,
+    isLiked: false,
+    isScrapped: false
+  },
+  {
+    postId: '2',
+    userId: 'user2',
+    userName: 'Bob',
+    userProfile: 'https://picsum.photos/50/50?random=2',
+    imageUrl: 'https://picsum.photos/400/400?random=5',
+    prompt: 'Underwater scene with bioluminescent creatures',
+    createdAt: '2024-03-14T16:45:00Z',
+    likes: 89,
+    comments: 12,
+    scraps: 34,
+    isLiked: true,
+    isScrapped: false
+  },
+  {
+    postId: '3',
+    userId: 'user3',
+    userName: 'Charlie',
+    userProfile: 'https://picsum.photos/50/50?random=3',
+    imageUrl: 'https://picsum.photos/400/400?random=6',
+    prompt: 'Steampunk airship flying through clouds',
+    createdAt: '2024-03-13T14:30:00Z',
+    likes: 234,
+    comments: 45,
+    scraps: 67,
+    isLiked: false,
+    isScrapped: true
+  }
+]; 

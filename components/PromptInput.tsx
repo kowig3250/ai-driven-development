@@ -15,8 +15,9 @@ export function PromptInput() {
       alert('프롬프트를 입력해 주세요');
       return;
     }
-    // TODO: 이미지 생성 API 연동
-    router.push('/generate');
+    // URL 인코딩된 프롬프트를 쿼리 파라미터로 전달
+    const encodedPrompt = encodeURIComponent(prompt.trim());
+    router.push(`/generate?prompt=${encodedPrompt}`);
   };
 
   // 프롬프트 길이에 따른 배경색 계산
@@ -35,6 +36,11 @@ export function PromptInput() {
         placeholder="이미지를 생성할 프롬프트를 입력하세요"
         value={prompt}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === 'Enter') {
+            handleGenerateImage();
+          }
+        }}
         className="mb-4"
       />
       <Button 

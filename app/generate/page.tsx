@@ -1,18 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { mockGeneratedImage } from '@/lib/mock-data';
 import { PromptInput } from '@/components/generate/prompt-input';
 import { StyleOptions } from '@/components/generate/style-options';
 import { GenerateButton } from '@/components/generate/generate-button';
 import { GeneratedImagePreview } from '@/components/generate/generated-image-preview';
+import { useSearchParams } from 'next/navigation';
 
 export default function GeneratePage() {
+  const searchParams = useSearchParams();
   const [prompt, setPrompt] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<typeof mockGeneratedImage | null>(null);
+
+  // URL에서 프롬프트 가져오기
+  useEffect(() => {
+    const promptFromUrl = searchParams.get('prompt');
+    if (promptFromUrl) {
+      setPrompt(decodeURIComponent(promptFromUrl));
+    }
+  }, [searchParams]);
 
   const handleGenerate = async () => {
     if (prompt.length < 10) return;
