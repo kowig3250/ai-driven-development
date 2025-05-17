@@ -6,8 +6,8 @@ import { StyleOptionsProps } from '@/types';
 export function StyleOptions({
   selectedStyle,
   selectedColor,
-  onStyleChange,
-  onColorChange,
+  onStyleChangeAction,
+  onColorChangeAction,
 }: StyleOptionsProps) {
   return (
     <div className="space-y-6">
@@ -21,7 +21,7 @@ export function StyleOptions({
             <select
               className="w-full p-2 border rounded-lg"
               value={selectedStyle}
-              onChange={(e) => onStyleChange(e.target.value)}
+              onChange={(e) => onStyleChangeAction(e.target.value)}
             >
               <option value="">스타일 선택</option>
               {styleOptions.styles.map((style) => (
@@ -37,7 +37,7 @@ export function StyleOptions({
             <select
               className="w-full p-2 border rounded-lg"
               value={selectedColor}
-              onChange={(e) => onColorChange(e.target.value)}
+              onChange={(e) => onColorChangeAction(e.target.value)}
             >
               <option value="">색조 선택</option>
               {styleOptions.moods.map((mood) => (

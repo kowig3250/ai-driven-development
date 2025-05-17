@@ -1,3 +1,154 @@
+# 이미지 생성 화면
+
+이미지 생성 화면은 사용자가 텍스트 프롬프트를 입력하고 다양한 스타일 옵션을 선택하여 AI 이미지를 생성할 수 있는 인터페이스를 제공합니다.
+
+## 주요 기능
+
+### 1. 프롬프트 입력
+- 텍스트 영역을 통해 이미지 생성을 위한 프롬프트 입력
+- 최소 10자 이상의 상세한 설명 권장
+- 실시간 입력 유효성 검사
+
+### 2. 스타일 옵션
+- 이미지 스타일 선택
+  - 사실주의 (realistic)
+  - 만화풍 (cartoon)
+  - 수채화 (watercolor)
+  - 유화 (oil)
+- 색조 조정
+  - 밝은 (bright)
+  - 어두운 (dark)
+  - 따뜻한 (warm)
+  - 차가운 (cold)
+
+### 3. 이미지 생성 프로세스
+- 비동기 이미지 생성 처리
+- 실시간 생성 상태 모니터링
+- 토스트 알림을 통한 작업 상태 표시
+  - 생성 시작
+  - 생성 완료
+  - 오류 발생
+
+### 4. 결과 이미지 표시
+- 생성된 이미지 프리뷰
+- 이미지 로딩 상태 표시
+- 이미지 로드 실패 시 오류 메시지
+- 이미지 다운로드 옵션
+
+## UI 컴포넌트
+
+### 1. 프롬프트 입력 컴포넌트
+```typescript
+<PromptInput
+  prompt={prompt}
+  onPromptChange={setPrompt}
+/>
+```
+
+### 2. 스타일 옵션 컴포넌트
+```typescript
+<StyleOptions
+  selectedStyle={selectedStyle}
+  selectedColor={selectedColor}
+  onStyleChangeAction={setSelectedStyle}
+  onColorChangeAction={setSelectedColor}
+/>
+```
+
+### 3. 이미지 프리뷰 컴포넌트
+```typescript
+<GeneratedImagePreview
+  generatedImage={generatedImage}
+/>
+```
+
+### 4. 토스트 알림 컴포넌트
+```typescript
+<Toast
+  message={toast.message}
+  type={toast.type}
+  onClose={() => setToast(null)}
+/>
+```
+
+## 상태 관리
+
+### 1. 로컬 상태
+```typescript
+const [prompt, setPrompt] = useState('');
+const [selectedStyle, setSelectedStyle] = useState('');
+const [selectedColor, setSelectedColor] = useState('');
+const [isLoading, setIsLoading] = useState(false);
+const [generatedImage, setGeneratedImage] = useState<{
+  imageUrl: string;
+  generationId: string;
+  status: 'success';
+} | null>(null);
+const [error, setError] = useState<string | null>(null);
+const [toast, setToast] = useState<{
+  message: string;
+  type: 'success' | 'error' | 'info';
+} | null>(null);
+```
+
+### 2. 이미지 생성 프로세스
+1. 프롬프트 유효성 검사
+2. API 요청 전송
+3. 생성 ID 수신
+4. 상태 폴링 시작
+5. 결과 이미지 표시
+
+## 에러 처리
+
+### 1. 프롬프트 관련
+- 빈 프롬프트
+- 최소 길이 미달
+- 부적절한 내용
+
+### 2. API 관련
+- 서버 오류
+- 네트워크 오류
+- 타임아웃
+
+### 3. 이미지 생성 관련
+- 생성 실패
+- 이미지 로드 실패
+- 형식 오류
+
+## 사용자 경험
+
+### 1. 로딩 상태
+- 버튼 비활성화
+- 로딩 인디케이터
+- 진행 상태 표시
+
+### 2. 피드백
+- 토스트 알림
+- 에러 메시지
+- 성공 메시지
+
+### 3. 반응형 디자인
+- 모바일 최적화
+- 태블릿 지원
+- 데스크톱 레이아웃
+
+## 성능 최적화
+
+### 1. 이미지 최적화
+- Next.js Image 컴포넌트 사용
+- 적절한 이미지 크기
+- 지연 로딩
+
+### 2. API 호출 최적화
+- 폴링 간격 조정
+- 캐싱 전략
+- 에러 재시도
+
+### 3. 상태 관리 최적화
+- 불필요한 리렌더링 방지
+- 메모이제이션
+- 상태 업데이트 최적화
+
 ## 이미지 생성 화면 기능명세서
 
 ---

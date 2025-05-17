@@ -63,7 +63,7 @@ export interface GenerateImageResponse {
 export interface GenerateButtonProps {
   prompt: string;
   isGenerating: boolean;
-  onClick: () => void;
+  onClickAction: () => Promise<void>;
 }
 
 // 이미지 프리뷰 Props 타입
@@ -85,6 +85,6 @@ export interface PromptInputProps {
 export interface StyleOptionsProps {
   selectedStyle: string;
   selectedColor: string;
-  onStyleChange: (value: string) => void;
-  onColorChange: (value: string) => void;
+  onStyleChangeAction: (value: string) => void;
+  onColorChangeAction: (value: string) => void;
 } 
