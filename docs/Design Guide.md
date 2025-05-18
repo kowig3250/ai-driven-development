@@ -53,7 +53,58 @@
 
 ## 컴포넌트 디자인
 
-### 1. 버튼
+### 1. 헤더
+
+#### 기본 헤더
+```tsx
+<header className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-50">
+  <div className="container mx-auto px-4 h-full flex items-center justify-between">
+    {/* 로고 */}
+    <div className="flex items-center">
+      <Image src="/logo.png" alt="Logo" width={64} height={64} className="w-16 h-16" />
+      <span className="ml-2 text-xl font-semibold">AI Image Generator</span>
+    </div>
+    
+    {/* 내비게이션 */}
+    <nav className="flex items-center space-x-4">
+      <Link href="/gallery" className="text-gray-600 hover:text-blue-500">
+        내 갤러리
+      </Link>
+      <Link href="/generate" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        이미지 생성
+      </Link>
+    </nav>
+  </div>
+</header>
+```
+
+#### 모바일 헤더
+```tsx
+<header className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-50">
+  <div className="container mx-auto px-4 h-full flex items-center justify-between">
+    {/* 로고 */}
+    <div className="flex items-center">
+      <Image src="/logo.png" alt="Logo" width={64} height={64} className="w-16 h-16" />
+    </div>
+    
+    {/* 모바일 메뉴 버튼 */}
+    <button className="p-2 text-gray-600 hover:text-blue-500">
+      <MenuIcon className="w-6 h-6" />
+    </button>
+  </div>
+</header>
+```
+
+#### 헤더 스타일 가이드
+- 높이: `4rem` (64px)
+- 배경색: `#FFFFFF`
+- 테두리: `1px solid #E5E7EB`
+- 로고 크기: `4rem` (64px)
+- 내비게이션 간격: `1rem` (16px)
+- 버튼 패딩: `1rem` (16px)
+- 모바일 브레이크포인트: `768px`
+
+### 2. 버튼
 
 #### 기본 버튼
 ```tsx
@@ -69,7 +120,7 @@
 </button>
 ```
 
-### 2. 입력 필드
+### 3. 입력 필드
 
 #### 텍스트 입력
 ```tsx
@@ -89,7 +140,7 @@
 />
 ```
 
-### 3. 선택 필드
+### 4. 선택 필드
 
 #### 드롭다운
 ```tsx
@@ -100,7 +151,7 @@
 </select>
 ```
 
-### 4. 토스트 알림
+### 5. 토스트 알림
 
 #### 기본 토스트
 ```tsx
@@ -124,7 +175,7 @@ const toastStyles = {
 </div>
 ```
 
-### 5. 이미지 프리뷰
+### 6. 이미지 프리뷰
 
 #### 기본 프리뷰
 ```tsx
@@ -269,3 +320,42 @@ const toastStyles = {
 - 컴포넌트 분할
 - 불필요한 리렌더링 방지
 - 코드 스플리팅
+
+### 7. 변경 이력
+
+#### 2024-06-13
+- 헤더 로고 이미지를 `/logo.png`로 교체, 크기를 64px로 통일
+- Next.js Image 컴포넌트의 fill + sizes 속성 일괄 적용 (경고 제거)
+- 이미지 생성 API에서 스타일/색조 옵션 모두 프롬프트에 반영
+
+## 스타일 옵션
+- 이미지 스타일 선택
+  - 사실주의 (realistic)
+  - 만화풍 (cartoon)
+  - 수채화 (watercolor)
+  - 유화 (oil)
+- 로고 스타일 (minimal, geometric, organic, tech, playful, corporate, artistic, abstract 등)
+- 색조 조정
+  - 밝은 (bright)
+  - 어두운 (dark)
+  - 따뜻한 (warm)
+  - 차가운 (cold)
+  - 단색(monochrome), 그라데이션(gradient), 파스텔톤(pastel), 선명한(vibrant), 차분한(muted), 금속성(metallic) 등
+
+**모든 스타일/색조 옵션은 이미지 생성 프롬프트에 자동으로 반영됩니다.**
+예: "minimal style, bright color tone" 등으로 프롬프트가 보강됨
+
+### 3. 이미지 생성 프로세스
+- 비동기 이미지 생성 처리
+- 실시간 생성 상태 모니터링
+- 토스트 알림을 통한 작업 상태 표시
+  - 생성 시작
+  - 생성 완료
+  - 오류 발생
+- 스타일/색조 옵션이 프롬프트에 반영되어 API로 전달됨
+
+#### 2024-06-13
+- 스타일/색조 옵션이 프롬프트에 모두 반영되도록 API 및 UI 로직 개선
+- 로고 스타일 옵션 추가 및 문서화
+- 이미지 컴포넌트 fill+sizes 속성 적용 가이드 추가
+- 헤더 로고 이미지 64px로 통일 및 예시 코드 수정

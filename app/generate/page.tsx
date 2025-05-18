@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { PromptInput } from '@/components/generate/prompt-input';
-import { StyleOptions } from '@/components/generate/style-options';
+import StyleOptions from '@/components/generate/style-options';
 import { GenerateButton } from '@/components/generate/generate-button';
 import { GeneratedImagePreview } from '@/components/generate/generated-image-preview';
 import { useSearchParams } from 'next/navigation';
 import { Toast } from '@/components/ui/toast';
 import { GenerateImageRequest } from '@/types';
+import { StyleType, ColorTone } from '@/types/style';
 
 // 이미지 생성 상태를 위한 타입 정의
 interface GenerationStatus {
@@ -20,8 +21,8 @@ interface GenerationStatus {
 export default function GeneratePage() {
   const searchParams = useSearchParams();
   const [prompt, setPrompt] = useState('');
-  const [selectedStyle, setSelectedStyle] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedStyle, setSelectedStyle] = useState<StyleType | undefined>(undefined);
+  const [selectedColor, setSelectedColor] = useState<ColorTone>('bright');
   const [isLoading, setIsLoading] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<{
     imageUrl: string;
@@ -55,6 +56,7 @@ export default function GeneratePage() {
           prompt,
           styleOptions: {
             style: selectedStyle,
+            color: selectedColor,
             quality: 'high',
             aspectRatio: '1:1'
           }
@@ -109,7 +111,7 @@ export default function GeneratePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-3xl font-bold mb-8">이미지 생성</h1>
       
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -131,7 +133,7 @@ export default function GeneratePage() {
         <StyleOptions
           selectedStyle={selectedStyle}
           selectedColor={selectedColor}
-          onStyleChangeAction={setSelectedStyle}
+          onStyleChangeAction={(style) => setSelectedStyle(style)}
           onColorChangeAction={setSelectedColor}
         />
 

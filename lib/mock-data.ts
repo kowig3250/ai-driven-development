@@ -1,4 +1,5 @@
 import { Post } from '@/types';
+import { StyleType } from '@/types/style';
 
 export const mockPosts: Post[] = [
   {
@@ -294,4 +295,27 @@ export const mockCommunityPosts = [
     isLiked: false,
     isScrapped: true
   }
-]; 
+];
+
+export const LOGO_STYLE_PREVIEWS: Record<StyleType, { image: string; description: string }> = {
+  realistic: { image: '/mockups/realistic.jpg', description: '사실적인 이미지 스타일' },
+  cartoon: { image: '/mockups/cartoon.jpg', description: '만화 스타일의 이미지' },
+  watercolor: { image: '/mockups/watercolor.jpg', description: '수채화 느낌의 이미지' },
+  oil: { image: '/mockups/oil.jpg', description: '유화 스타일의 이미지' },
+  minimal: { image: '/mockups/minimal.jpg', description: '단순하고 깔끔한 디자인' },
+  geometric: { image: '/mockups/geometric.jpg', description: '기하학적 도형을 활용한 디자인' },
+  organic: { image: '/mockups/organic.jpg', description: '자연스러운 곡선과 흐름' },
+  tech: { image: '/mockups/tech.jpg', description: '기술적이고 미래지향적인 디자인' },
+  playful: { image: '/mockups/playful.jpg', description: '재미있고 활기찬 디자인' },
+  corporate: { image: '/mockups/corporate.jpg', description: '전문적이고 신뢰감 있는 디자인' },
+  artistic: { image: '/mockups/artistic.jpg', description: '예술적이고 창의적인 디자인' },
+  abstract: { image: '/mockups/abstract.jpg', description: '추상적이고 현대적인 디자인' },
+  'logo-minimal': { image: '/mockups/logo-minimal.svg', description: '단순하고 깔끔한 로고 디자인' },
+  'logo-geometric': { image: '/mockups/logo-geometric.svg', description: '기하학적 도형을 활용한 로고' },
+  'logo-organic': { image: '/mockups/logo-organic.svg', description: '자연스러운 곡선의 로고' },
+  'logo-tech': { image: '/mockups/logo-tech.svg', description: '기술적이고 미래지향적인 로고' },
+  'logo-playful': { image: '/mockups/logo-playful.svg', description: '재미있고 활기찬 로고' },
+  'logo-corporate': { image: '/mockups/logo-corporate.svg', description: '전문적이고 신뢰감 있는 로고' },
+  'logo-artistic': { image: '/mockups/logo-artistic.svg', description: '예술적이고 창의적인 로고' },
+  'logo-abstract': { image: '/mockups/logo-abstract.svg', description: '추상적이고 현대적인 로고' }
+}; 

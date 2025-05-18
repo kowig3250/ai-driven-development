@@ -41,14 +41,25 @@ export async function POST(request: Request) {
             auth: process.env.REPLICATE_API_TOKEN,
         });
 
-        // 스타일 옵션에 따른 프롬프트 수정
+        // 스타일과 색조 옵션에 따른 프롬프트 수정
         let enhancedPrompt = prompt;
+        
+        // 스타일 옵션 추가
         if (styleOptions?.style) {
-            enhancedPrompt = `${prompt}, ${styleOptions.style} style`;
+            enhancedPrompt = `${enhancedPrompt}, ${styleOptions.style} style`;
         }
+        
+        // 색조 옵션 추가
+        if (styleOptions?.color) {
+            enhancedPrompt = `${enhancedPrompt}, ${styleOptions.color} color tone`;
+        }
+        
+        // 품질 옵션 추가
         if (styleOptions?.quality) {
             enhancedPrompt = `${enhancedPrompt}, ${styleOptions.quality} quality`;
         }
+
+        console.log('최종 프롬프트:', enhancedPrompt);
 
         try {
             // 이미지 생성 요청
