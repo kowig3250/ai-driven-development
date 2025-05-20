@@ -12,7 +12,7 @@ export function GenerateButton({ prompt, isGenerating, onClickAction }: Generate
       className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-all duration-200
         ${isDisabled 
           ? 'bg-gray-400 cursor-not-allowed opacity-70' 
-          : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700 shadow-md hover:shadow-lg'
+          : 'bg-gray-800 hover:bg-gray-900 active:bg-gray-950 shadow-md hover:shadow-lg'
         }`}
       aria-busy={isGenerating}
     >

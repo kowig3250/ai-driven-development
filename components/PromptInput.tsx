@@ -20,16 +20,6 @@ export function PromptInput() {
     router.push(`/generate?prompt=${encodedPrompt}`);
   };
 
-  // 프롬프트 길이에 따른 배경색 계산
-  const getButtonStyle = () => {
-    const length = prompt.length;
-    if (length === 0) return 'bg-gray-400 hover:bg-gray-500';
-    if (length < 10) return 'bg-gray-500 hover:bg-gray-600';
-    if (length < 20) return 'bg-gray-600 hover:bg-gray-700';
-    if (length < 30) return 'bg-gray-700 hover:bg-gray-800';
-    return 'bg-gray-800 hover:bg-gray-900';
-  };
-
   return (
     <div className="max-w-2xl mx-auto mb-12">
       <Input
@@ -48,7 +38,9 @@ export function PromptInput() {
         disabled={!prompt.trim()}
         className={cn(
           "w-full transition-colors duration-200 text-white font-medium",
-          getButtonStyle()
+          !prompt.trim()
+            ? 'bg-gray-400 hover:bg-gray-500 cursor-not-allowed' 
+            : 'bg-blue-500 hover:bg-blue-600'
         )}
       >
         이미지 생성하기

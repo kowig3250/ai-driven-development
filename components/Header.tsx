@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,10 +47,29 @@ const Header = () => {
           </Link>
           <Link
             href="/generate"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className={`text-gray-600 hover:text-blue-500 transition-colors ${
+              isActive('/generate') ? 'text-blue-500' : ''
+            }`}
           >
             이미지 생성
           </Link>
+          <div className="flex items-center space-x-2">
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                  로그인
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                  회원가입
+                </button>
+              </SignUpButton>
+            </SignedOut>
+          </div>
         </nav>
 
         {/* 모바일 메뉴 버튼 */}
@@ -98,11 +118,30 @@ const Header = () => {
             </Link>
             <Link
               href="/generate"
-              className="py-2 text-gray-600 hover:text-blue-500 transition-colors"
+              className={`py-2 text-gray-600 hover:text-blue-500 transition-colors ${
+                isActive('/generate') ? 'text-blue-500' : ''
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               이미지 생성
             </Link>
+            <div className="flex flex-col space-y-2 py-2">
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    로그인
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                    회원가입
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+            </div>
           </nav>
         </div>
       )}
