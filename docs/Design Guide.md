@@ -70,9 +70,25 @@
       <Link href="/gallery" className="text-gray-600 hover:text-blue-500">
         내 갤러리
       </Link>
-      <Link href="/generate" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+      <Link href="/generate" className="text-gray-600 hover:text-blue-500">
         이미지 생성
       </Link>
+      {/* 인증 버튼 */}
+      <SignedIn>
+        <UserButton afterSignOutUrl="/" />
+      </SignedIn>
+      <SignedOut>
+        <SignInButton mode="modal">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            로그인
+          </button>
+        </SignInButton>
+        <SignUpButton mode="modal">
+          <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+            회원가입
+          </button>
+        </SignUpButton>
+      </SignedOut>
     </nav>
   </div>
 </header>
@@ -117,6 +133,19 @@
 ```tsx
 <button className="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed">
   비활성화
+</button>
+```
+
+#### 인증 버튼
+```tsx
+// 로그인 버튼
+<button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+  로그인
+</button>
+
+// 회원가입 버튼
+<button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+  회원가입
 </button>
 ```
 
@@ -321,12 +350,28 @@ const toastStyles = {
 - 불필요한 리렌더링 방지
 - 코드 스플리팅
 
-### 7. 변경 이력
+## 인증 관련 디자인
 
-#### 2024-06-13
-- 헤더 로고 이미지를 `/logo.png`로 교체, 크기를 64px로 통일
-- Next.js Image 컴포넌트의 fill + sizes 속성 일괄 적용 (경고 제거)
-- 이미지 생성 API에서 스타일/색조 옵션 모두 프롬프트에 반영
+### 1. 인증 버튼
+- 로그인 버튼: 파란색 배경 (`bg-blue-500`)
+- 회원가입 버튼: 초록색 배경 (`bg-green-500`)
+- 호버 효과: 진한 색상으로 변경
+- 둥근 모서리: `rounded-lg`
+- 패딩: `px-4 py-2`
+
+### 2. 사용자 프로필
+- 프로필 버튼: Clerk의 UserButton 컴포넌트 사용
+- 로그아웃 후 리다이렉트: 메인 페이지 (`/`)
+
+### 3. 인증 상태 표시
+- 로그인 상태: UserButton 표시
+- 비로그인 상태: 로그인/회원가입 버튼 표시
+- 모달 방식: `mode="modal"` 속성 사용
+
+### 4. 반응형 인증 UI
+- 데스크톱: 버튼 나란히 배치
+- 모바일: 세로로 배치
+- 햄버거 메뉴 내 인증 버튼 포함
 
 ## 스타일 옵션
 - 이미지 스타일 선택
