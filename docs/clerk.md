@@ -30,14 +30,28 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 `middleware.ts` 파일을 프로젝트 루트에 생성합니다:
 
 ```typescript
-import { authMiddleware } from "@clerk/nextjs";
- 
-export default authMiddleware({
-  publicRoutes: ["/", "/api/webhook"]
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+
+// 공개 라우트 설정
+const publicRoutes = ["/", "/sign-in(.*)", "/sign-up(.*)"];
+// 인증 검사에서 제외할 라우트
+const ignoredRoutes = ["/api/webhook"];
+
+const isPublic = createRouteMatcher(publicRoutes);
+const isIgnored = createRouteMatcher(ignoredRoutes);
+
+export default clerkMiddleware(async (auth, request) => {
+  // public 또는 ignored 라우트인 경우 인증 검사 건너뛰기
+  if (isPublic(request) || isIgnored(request)) {
+    return;
+  }
+  
+  // 그 외의 모든 라우트는 인증 필요
+  await auth.protect();
 });
- 
+
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
 ```
 
@@ -191,4 +205,39 @@ export default async function handler(req, res) {
 ### 9.2 디버깅 방법
 1. 브라우저 콘솔에서 에러 메시지 확인
 2. Clerk 대시보드의 로그 확인
-3. 환경 변수 로깅을 통한 설정 확인 
+3. 환경 변수 로깅을 통한 설정 확인
+
+## 10. 미들웨어 마이그레이션 가이드
+
+### 10.1 기존 authMiddleware에서 clerkMiddleware로 마이그레이션
+기존의 `authMiddleware`는 더 이상 권장되지 않으며, `clerkMiddleware`로 마이그레이션하는 것이 좋습니다.
+
+```typescript
+// 이전 방식 (권장하지 않음)
+import { authMiddleware } from "@clerk/nextjs/server";
+export default authMiddleware({
+  publicRoutes: ["/", "/api/webhook"]
+});
+
+// 새로운 방식 (권장)
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    await auth.protect();
+  }
+});
+```
+
+### 10.2 주요 변경사항
+1. `createRouteMatcher`를 사용한 라우트 매칭
+2. 비동기 처리 (`async/await`)
+3. 더 세밀한 라우트 보호 제어
+4. 향상된 타입 안정성
+
+### 10.3 마이그레이션 시 주의사항
+1. 기존 publicRoutes를 `createRouteMatcher`로 변환
+2. 비동기 처리를 위한 `async/await` 추가
+3. matcher 패턴 업데이트
+4. 타입 정의 확인 

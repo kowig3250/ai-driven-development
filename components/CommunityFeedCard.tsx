@@ -3,14 +3,21 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CommunityFeedCardProps } from '@/types';
+import { useCallback } from 'react';
 
 export function CommunityFeedCard({ post }: CommunityFeedCardProps) {
   const router = useRouter();
 
+  const handleClick = useCallback(() => {
+    requestAnimationFrame(() => {
+      router.push(`/post/${post.postId}`);
+    });
+  }, [router, post.postId]);
+
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-      onClick={() => router.push(`/post/${post.postId}`)}
+      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow will-change-transform"
+      onClick={handleClick}
     >
       <div className="relative aspect-square">
         <Image
@@ -18,6 +25,9 @@ export function CommunityFeedCard({ post }: CommunityFeedCardProps) {
           alt={post.prompt}
           fill
           className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
+          quality={75}
         />
       </div>
       <div className="p-4">
@@ -28,6 +38,9 @@ export function CommunityFeedCard({ post }: CommunityFeedCardProps) {
               alt={post.userName}
               fill
               className="object-cover"
+              sizes="32px"
+              loading="lazy"
+              quality={75}
             />
           </div>
           <span className="font-medium text-sm">{post.userName}</span>

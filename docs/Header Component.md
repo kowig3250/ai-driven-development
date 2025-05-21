@@ -133,9 +133,22 @@
 
 - **파일 위치**: `middleware.ts`
 - **기능**:
-  - Clerk 인증 미들웨어 설정
-  - 공개 라우트 설정
-  - 인증 상태 확인
+  - Clerk의 `clerkMiddleware` 사용
+  - `createRouteMatcher`를 통한 라우트 매칭
+  - 공개 라우트 설정:
+    ```typescript
+    const publicRoutes = ["/", "/sign-in(.*)", "/sign-up(.*)"];
+    const ignoredRoutes = ["/api/webhook"];
+    ```
+  - 비동기 인증 처리:
+    ```typescript
+    export default clerkMiddleware(async (auth, request) => {
+      if (isPublic(request) || isIgnored(request)) {
+        return;
+      }
+      await auth.protect();
+    });
+    ```
 
 #### 3. 테스트 항목
 
@@ -144,10 +157,13 @@
    - 페이지 전환 시 헤더가 유지되는지 확인
 
 2. **인증**
-   - 인증 미들웨어가 정상 작동하는지 확인
+   - `clerkMiddleware`가 정상 작동하는지 확인
+   - `createRouteMatcher`를 통한 라우트 매칭이 정확한지 확인
    - 공개 라우트 접근이 가능한지 확인
    - 보호된 라우트 접근이 제한되는지 확인
+   - 비동기 인증 처리가 정상 작동하는지 확인
 
 3. **성능**
    - 헤더 컴포넌트의 렌더링 성능 확인
-   - 불필요한 리렌더링이 발생하지 않는지 확인 
+   - 불필요한 리렌더링이 발생하지 않는지 확인
+   - 비동기 인증 처리로 인한 지연이 없는지 확인 

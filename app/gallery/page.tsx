@@ -1,5 +1,8 @@
 'use client';
 
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useState } from 'react';
 import { TabNavigation } from '@/components/gallery/TabNavigation';
 import { GallerySection } from '@/components/gallery/GallerySection';
@@ -8,6 +11,8 @@ import { FilterSortBar } from '@/components/gallery/FilterSortBar';
 import { Toast } from '@/components/common/Toast';
 
 export default function GalleryPage() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'gallery' | 'community'>('gallery');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [selectedSort, setSelectedSort] = useState('latest');
@@ -15,6 +20,16 @@ export default function GalleryPage() {
   const [selectedVisibility, setSelectedVisibility] = useState('all');
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      // 로그인되지 않은 상태에서 갤러리 페이지 접근 시 로그인 모달 표시
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }
+  }, [isLoaded, isSignedIn]);
 
   const handleResetFilters = () => {
     setSelectedFilter('all');
@@ -30,6 +45,10 @@ export default function GalleryPage() {
       setShowToast(false);
     }, 3000);
   };
+
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <main className="container mx-auto px-4 py-8">

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs';
 import Header from "@/components/Header";
+import { AuthCheck } from '@/components/auth/AuthCheck';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <main className="pt-16">
             {children}
           </main>
+          <AuthCheck />
         </body>
       </html>
     </ClerkProvider>

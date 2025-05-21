@@ -4,11 +4,15 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
+import { AuthModal } from './auth/AuthModal';
+import { closeAuthModal } from '@/app/actions/auth';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { isSignedIn } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -16,6 +20,18 @@ const Header = () => {
 
   const isActive = (path: string) => {
     return pathname === path;
+  };
+
+  const handleProtectedRouteClick = (e: React.MouseEvent) => {
+    if (!isSignedIn) {
+      e.preventDefault();
+      setIsAuthModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = async () => {
+    setIsAuthModalOpen(false);
+    await closeAuthModal();
   };
 
   return (
@@ -42,6 +58,7 @@ const Header = () => {
             className={`text-gray-600 hover:text-blue-500 transition-colors ${
               isActive('/gallery') ? 'text-blue-500' : ''
             }`}
+            onClick={handleProtectedRouteClick}
           >
             내 갤러리
           </Link>
@@ -50,6 +67,7 @@ const Header = () => {
             className={`text-gray-600 hover:text-blue-500 transition-colors ${
               isActive('/generate') ? 'text-blue-500' : ''
             }`}
+            onClick={handleProtectedRouteClick}
           >
             이미지 생성
           </Link>
@@ -112,7 +130,10 @@ const Header = () => {
               className={`py-2 text-gray-600 hover:text-blue-500 transition-colors ${
                 isActive('/gallery') ? 'text-blue-500' : ''
               }`}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                handleProtectedRouteClick(e);
+                setIsMobileMenuOpen(false);
+              }}
             >
               내 갤러리
             </Link>
@@ -121,7 +142,10 @@ const Header = () => {
               className={`py-2 text-gray-600 hover:text-blue-500 transition-colors ${
                 isActive('/generate') ? 'text-blue-500' : ''
               }`}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                handleProtectedRouteClick(e);
+                setIsMobileMenuOpen(false);
+              }}
             >
               이미지 생성
             </Link>
@@ -145,6 +169,11 @@ const Header = () => {
           </nav>
         </div>
       )}
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onCloseAction={handleCloseModal}
+      />
     </header>
   );
 };
